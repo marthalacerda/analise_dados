@@ -16,6 +16,7 @@ print(pessoa1.ler_nome())
 print(pessoa1.nome_completo)
 print(pessoa1.primeiro_nome)
 print(pessoa1.segundo_nome)
+print(pessoa1.formatar_cep())
 
 
 

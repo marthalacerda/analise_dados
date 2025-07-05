@@ -50,7 +50,11 @@ class Pessoa:
         # self.segundo_nome - será atribuído dentro da função
         self.__atribuir_nomes()
 
-        # self.celular
+        self.__atribuir_endereco()
+        
+        # self.celular - será atribuido dentro da função
+
+
         # self.cpf
 
         # Dados acessados via API
@@ -60,9 +64,7 @@ class Pessoa:
         # self.cidade
         # self.estado
 
-        
-
-        
+          
 
 
     
@@ -71,14 +73,15 @@ class Pessoa:
         Formatacao com iniciais maiúsculas e preposições minúsculas.
         
         Returns:
-            Lista com o nome completo da pessoa no formato correto"""
-        
-        nome_sem_tratamento = self.dados.get('NomeCompleto')   # nome pega o dado bruto de NomeCompleto
+            Lista com o nome completo da pessoa no formato correto.
+        """
+        # Dado bruto de NomeCompleto
+        nome_sem_tratamento = self.dados.get('NomeCompleto')   
 
-        # nome minusculo e separado em lista
+        # Nome minusculo e separado em lista
         nome_minusculo = nome_sem_tratamento.strip().lower().split()
 
-        # set com preposições
+        # Set com preposições
         preposicoes = {'da', 'de', 'do', 'das', 'dos', 'e'}
 
         # formatar nome
@@ -93,7 +96,7 @@ class Pessoa:
         prep = False
         x = 0
         while x < len(nome_minusculo):
-            
+
             if nome_minusculo[x] in preposicoes:
                 prep = True
                 x += 1
@@ -119,15 +122,28 @@ class Pessoa:
         # Nome completo em uma string só
         self.nome_completo = ' '.join(nome)
 
-        # Primeiro nome em string
+        # Primeiro e segundo nome em string
         self.primeiro_nome = nome[0]
-
-        # Segundo nome (se for preposição incluir o "3o nome")
         self.segundo_nome = nome[1]
 
 
+    def __ler_cep(self) -> str:
+        """Lê o CEP de Pessoa e retorna na formatação correta com apenas números.
 
+        Returns:
+            str: String do CEP no formato correto.
+        """
+        cep = self.dados.get('CEP')
 
+        # Juntando uma lista que filtra caracteres numericos
+        cep_formatado = ''.join(list(filter(lambda x: x.isdigit(), cep)))
+
+        return cep_formatado
+
+    def __atribuir_endereco(self) -> None:
+        """Atribui o bairro, cidade e estado de Pessoa atraves do CEP."""
+
+        pass
         
        
 
