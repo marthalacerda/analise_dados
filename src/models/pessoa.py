@@ -8,9 +8,6 @@ Tem métodos para formatação e validação das informações recebidas.
 
 
 
-from pathlib import Path
-
-
 class Pessoa:
     """Usuario proveniente da lista de clientes
     
@@ -33,7 +30,7 @@ class Pessoa:
         """Inicializa a instância de Pessoa.
         
         Args:
-            pessoa_data (dict[str, str]): Dados da pessoa
+            pessoa_data (dict[str, str]): Dicionario com dados do cliente
         """
         # Dados brutos
         self.dados = pessoa_data
@@ -143,7 +140,11 @@ class Pessoa:
     def __atribuir_endereco(self) -> None:
         """Atribui o bairro, cidade e estado de Pessoa atraves do CEP."""
 
-        pass
+        # CEP na formatação correta
+        cep = self.__ler_cep()
+
+        
+        
         
        
 
