@@ -5,8 +5,7 @@ um arquivo em /data.
 Tem métodos para formatação e validação das informações recebidas.
 """
 
-
-
+from src.models.endereco import Endereco
 
 class Pessoa:
     """Usuario proveniente da lista de clientes
@@ -19,10 +18,11 @@ class Pessoa:
         email (str): Email da Pessoa
         celular (str): Celular com DDD da Pessoa
         interesse (str): Interesse de estudo da Pessoa
-        cpf (str): CPF da Pessoa 
-        bairro (str): Bairro do endereço da Pessoa
-        cidade (str): Cidade do endereço da pessoa
-        estado (str): Estado do endereço da Pessoa
+        cpf (str): CPF da Pessoa
+        endereco (Endereco): Instancia de Endereço
+    (?)    bairro (str): Bairro do endereço da Pessoa
+    (?)    cidade (str): Cidade do endereço da pessoa
+    (?)    estado (str): Estado do endereço da Pessoa
         observacoes (list[str]): Observações sobre inconsistências nos dados
     """
 
@@ -41,13 +41,13 @@ class Pessoa:
         self.observacoes = []
 
         # Dados que precisam tratar formatação
-
-        # self.nome_completo - será atribuído dentro da função
-        # self.primeiro_nome - será atribuído dentro da função
-        # self.segundo_nome - será atribuído dentro da função
         self.__atribuir_nomes()
+        # o self.endereco é um objeto do tipo Endereco. O setter de endereço atribui todos os outros.
+        # self.endereco - atribuido em função
+        # self.bairro - atribuido em função
+        # self.cidade - atribuido em função
+        # self.estado - atribuído em função
 
-        self.__atribuir_endereco()
         
         # self.celular - será atribuido dentro da função
 
@@ -57,9 +57,7 @@ class Pessoa:
         # Dados acessados via API
         # self.genero
         # self.cpf
-        # self.bairro
-        # self.cidade
-        # self.estado
+
 
           
 
@@ -124,7 +122,7 @@ class Pessoa:
         self.segundo_nome = nome[1]
 
 
-    def __ler_cep(self) -> str:
+    def ler_cep(self) -> str:
         """Lê o CEP de Pessoa e retorna na formatação correta com apenas números.
 
         Returns:
@@ -136,14 +134,15 @@ class Pessoa:
         cep_formatado = ''.join(list(filter(lambda x: x.isdigit(), cep)))
 
         return cep_formatado
+ 
 
-    def __atribuir_endereco(self) -> None:
-        """Atribui o bairro, cidade e estado de Pessoa atraves do CEP."""
-
-        # CEP na formatação correta
-        cep = self.__ler_cep()
-
+    def atribuir_endereco(self, endereco: Endereco) -> None:
+        """Atribui endereço a Pessoa"""
+        self.endereco = endereco
         
+    
+    # TRATAR TELEFONE
+    
         
         
        

@@ -14,3 +14,4 @@ Extrair dados de um arquivo csv e formatar, validar os dados com auxilio de APIs
 ### Melhorias futuras:
 - Criar modulo "util" para tratar formatação de strings
 
+
