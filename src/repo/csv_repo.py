@@ -8,13 +8,13 @@ from pathlib import Path
 def ler_csv(caminho_arquivo: Path) -> list[dict]:
     """Lê um arquivo csv e retorna seus dados sem tratamento
     
-    Parâmetros:
+    Args:
         caminho_arquivo: Path - caminho para o arquivo csv em ./data.
     
     Raises:
         FileNotFoundError: Caso o arquivo não seja encontrado.
     
-    Retorna:
+    Returns:
         list[dict] - lista de registros do csv, cada um como um dicionario.
     """
     
