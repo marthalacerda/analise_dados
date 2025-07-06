@@ -34,7 +34,7 @@ class Endereco:
     def __init__(self, dados: dict[str, str]) -> None:
         '''Inicializa a classe Endereço
         
-        Args:
+        Argumentos:
             dados (dict[str, str]): Dados do CEP
         '''
         self.bairro = dados.get('bairro', '')

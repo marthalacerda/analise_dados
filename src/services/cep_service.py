@@ -1,6 +1,6 @@
 """
 Módulo para fazer requisição à API ViaCep
-Nese módulo estão implementadas funções.
+Nese módulo está implementada a função para requisição.
 """
 
 import requests
@@ -8,14 +8,14 @@ import requests
 def buscar_cep(cep: str) -> dict[str, str]:
     """Faz a requisição get à API ViaAPI e retorna os dados do CEP
     
-    Args:
+    Argumentos:
         cep (str): Código de Endereçamento Postal
 
-    Raises:
+    Levanta:
         ConnectionError: Caso não seja possível a comunicação com a API.
         ValueError: Caso o CEP não seja encontrado.
     
-    Returns:
+    Retorna:
         dict[str, str]: JSON com dados do CEP
     """
 

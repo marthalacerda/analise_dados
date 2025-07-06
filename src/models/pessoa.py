@@ -171,8 +171,11 @@ class Pessoa:
         cpf_so_numeros = ''.join(list(filter(lambda x: x.isdigit(), cpf)))
         self.__cpf = cpf_so_numeros
 
+    # Observações
 
-
+    def add_observacao(self, obs: str) -> None:
+        """Adiciona uma observação à lista de observações da Pessoa"""
+        self.observacoes.append(obs)
 
 
 if __name__ == '__main__':

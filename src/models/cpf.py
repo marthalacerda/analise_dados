@@ -16,6 +16,9 @@ class CPF:
         
         Argumentos:
             cpf (str): Cadastro de Pessoa Física (somente numeros)
+
+        Levanta:
+            ValueError: Caso o CPF seja inválido.
         """
         self.cpf = cpf
 

@@ -17,14 +17,16 @@ from pathlib import Path
 from src.repo.csv_repo import ler_csv
 from src.models.pessoa import Pessoa
 from src.models.endereco import Endereco
-from src.services import cep_service
+from src.services import cep_service, gender_service
 from src.models.cpf import CPF
 
 # depois mudar - tirar os src. e apagar as 3 primeiras linhas lá de cima
 
 class PessoaController:
     """Classe com métodos para a montagem de objeto Pessoa"""
-    
+    def __init__(self, opcao_genero):
+
+        ...
 
 
 
@@ -34,7 +36,7 @@ class PessoaController:
 
 
 
-def construir_pessoa(dados_pessoa: dict) -> Pessoa:
+def construir_pessoa(dados_pessoa: dict, opcao_genero) -> Pessoa:
     """Função para construir uma instância de Pessoa.
     
     Argumentos:
@@ -55,16 +57,21 @@ def construir_pessoa(dados_pessoa: dict) -> Pessoa:
 
     # Ler o telefone e verificar se é válido ou se precisa de ajuste
     try:
-        pessoa.endereco = formatar_celular(pessoa)      # aqui ajustou o celular
+        pessoa.celular = formatar_celular(pessoa)      # aqui ajustou o celular
     except ValueError as e:
-        pessoa.observacoes.append(e)
+        pessoa.add_observacao(e)
 
     # Chamar init de CPF para validar o cpf de Pessoa
     try:
         CPF(pessoa.cpf)                         # aqui a instancia de CPF verificou o cpf
     except ValueError as e:
-        pessoa.observacoes.append(e)
+        pessoa.add_observacao(e)
 
+    # Acessar API de genero
+    try:
+        pessoa.genero = buscar_genero(pessoa, opcao_genero)
+    except ConnectionError as e:
+        print(e)
 
 
 
@@ -77,12 +84,32 @@ def construir_pessoa(dados_pessoa: dict) -> Pessoa:
 
 
 
+# Criando CEP e validando
+def validar_cpf(pessoa: Pessoa) -> None:
+    """Instancia CPF com o cpf da Pessoa e faz a validação
+    
+    Argumentos:
+        pessoa (Pessoa): Objeto Pessoa que terá o cpf validado
+    
+    Levanta:
+        ValueError: Caso o CPF seja inválido.
+    """
+    cpf = pessoa.cpf
+    CPF(cpf)
+
+
+
+
 # Criando Endereço da Pessoa
 def criar_endereco(pessoa: Pessoa) -> Endereco:
     """Função que busca as informações do cep via API e cria endereço.
     
     Argumentos:
         pessoa (Pessoa): Objeto Pessoa que vai fornecer o cep
+
+    Levanta:
+        ValueError: CEP não encontrado
+        ConnectionError: Erro na conexão com a API
 
     Retorna:
         Endereco: Instância da classe Endereco
@@ -94,7 +121,6 @@ def criar_endereco(pessoa: Pessoa) -> Endereco:
 
     # Retornar instancia de endereço
     return Endereco(dados_cep)
-
 
 
 
@@ -115,16 +141,16 @@ def formatar_celular(pessoa: Pessoa) -> str:
 
     # Verificando
     if not cel_so_numeros:
-        pessoa.observacoes.append('Celular com campo vazio.')
-        # raise ValueError('Celular com campo vazio.')
+        # pessoa.observacoes.append('Celular com campo vazio.')
+        raise ValueError('Celular com campo vazio.')
 
     elif 8 > len(cel_so_numeros) > 0 or len(cel_so_numeros) > 11:
-        pessoa.observacoes.append('Celular inválido.')
-        # raise ValueError('Celular inválido.')
+        # pessoa.observacoes.append('Celular inválido.')
+        raise ValueError('Celular inválido.')
     
     elif len(cel_so_numeros) > 8 and cel_so_numeros[-9] != '9':
-        pessoa.observacoes.append('Celular Inválido.')
-        # raise ValueError('Celular inválido.')
+        # pessoa.observacoes.append('Celular Inválido.')
+        raise ValueError('Celular inválido.')
     
     
     if len(cel_so_numeros) == 8:
@@ -138,8 +164,35 @@ def formatar_celular(pessoa: Pessoa) -> str:
 
     return cel
 
-        
 
+def buscar_genero(pessoa: Pessoa, opcao: str) -> str:
+    """Acessa API para inferir o gênero de Pessoa
+    
+    Argumentos:
+        pessoa (Pessoa): Objeto Pessoa que vai fornecer o nome
+        opcao (str): Escolha do usuário (coletada em tempo de execução)
+
+    Levanta:
+        ConnentionError: Caso tenha erro na conexão com a API 
+        
+    Retorna:
+        str: Genero da pessoa (male/female)
+    """
+    nome = pessoa.primeiro_nome
+    genero = ''
+
+    # Chamar a função da API escolhida pelo usuário
+    match opcao:
+        case '1':
+            genero = gender_service.buscar_genero_generize(nome)
+
+        case '2':
+            ...
+
+        case '3':
+            ...
+        case _:
+            return genero
     
 
        
@@ -186,3 +239,6 @@ print()
 
 print(pessoa1.cpf)
 print()
+
+validar_cpf(pessoa1)
+print(pessoa1.observacoes)
