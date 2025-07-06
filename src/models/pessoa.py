@@ -42,14 +42,13 @@ class Pessoa:
 
         # Dados que precisam tratar formatação
         self.__atribuir_nomes()
-        # o self.endereco é um objeto do tipo Endereco. O setter de endereço atribui todos os outros.
-        # self.endereco - atribuido em função
+        # o self.endereco - sendo atribuído no controller
         # self.bairro - atribuido em função
         # self.cidade - atribuido em função
         # self.estado - atribuído em função
-
+        self.celular = pessoa_data.get('Celular')
+    
         
-        # self.celular - será atribuido dentro da função
 
 
         # self.cpf
@@ -67,11 +66,11 @@ class Pessoa:
         """Extrai o nome completo numa lista de strings
         Formatacao com iniciais maiúsculas e preposições minúsculas.
         
-        Returns:
+        Retorna:
             Lista com o nome completo da pessoa no formato correto.
         """
         # Dado bruto de NomeCompleto
-        nome_sem_tratamento = self.dados.get('NomeCompleto')   
+        nome_sem_tratamento = self.dados.get('NomeCompleto')
 
         # Nome minusculo e separado em lista
         nome_minusculo = nome_sem_tratamento.strip().lower().split()
@@ -125,7 +124,7 @@ class Pessoa:
     def ler_cep(self) -> str:
         """Lê o CEP de Pessoa e retorna na formatação correta com apenas números.
 
-        Returns:
+        Retorna:
             str: String do CEP no formato correto.
         """
         cep = self.dados.get('CEP')
@@ -135,16 +134,31 @@ class Pessoa:
 
         return cep_formatado
  
+    # Endereço
 
-    def atribuir_endereco(self, endereco: Endereco) -> None:
-        """Atribui endereço a Pessoa"""
-        self.endereco = endereco
-        
+    @property
+    def endereco(self) -> Endereco:
+        """Retorna objeto Endereco da Pessoa"""
+        return self.__endereco
     
-    # TRATAR TELEFONE
+    @endereco.setter
+    def endereco(self, end: Endereco | None) -> None:
+        """Atribui objeto Endereço ao atributo endereco de Pessoa"""
+        self.__endereco = end
+
+    # Celular
+
+    @property
+    def celular(self) -> str:
+        """Retorna o celular"""
+        return self.__celular
     
+    @ celular.setter
+    def celular(self, cel: str) -> None:
+        """Atribui celular a Pessoa."""
         
-        
+        self.__celular = cel
+      
        
 
 

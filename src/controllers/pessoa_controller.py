@@ -1,3 +1,13 @@
+"""
+Módulo da classe PessoaController
+Esta classe tem todos os métodos necessários para o fluxo de criação do objeto Pessoa
+Lista de métodos:
+
+.criar_endereco(cep)
+.formatar_celular(cel)
+
+"""
+
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
@@ -10,37 +20,126 @@ from src.services import cep_service
 
 # depois mudar - tirar os src. e apagar as 3 primeiras linhas lá de cima
 
+class PessoaController:
+    """Classe com métodos para a montagem de objeto Pessoa"""
+    ...
+
+
+
+
+
+
+
+
 def construir_pessoa(dados_pessoa: dict) -> Pessoa:
     """Função para construir uma instância de Pessoa.
     
-    Args:
+    Argumentos:
     
-    Returns:
+    Retorna:
         Pessoa: Instância de Pessoa
     """
     
     # Criar Pessoa com dados incompletos
     pessoa = Pessoa(dados_pessoa)           # aqui tratou e atribuiu os nomes
 
-    # Criar Endereco atraves do CEP da pessoa
-    endereco = criar_endereco(pessoa.ler_cep())     # aqui criou endereço
+    # Criar Endereco atraves do CEP da pessoa e atribuir a ela
+    pessoa.endereco = criar_endereco(pessoa.ler_cep())     # aqui criou endereço
+
+    # Ler o telefone e verificar se é válido ou se precisa de ajuste
+
+
+
 
     # Atribuir as informações de endereço em Pessoa
-    pessoa.atribuir_endereco(endereco)
+    # pessoa.atribuir_endereco(endereco)          # aqui criou o atributo endereco em Pessoa
     # pessoa.bairro = endereco.bairro
     # pessoa.cidade = endereco.cidade
     # pessoa.estado = endereco.estado
+    # pessoa.endereco = endereco
+
+
+
+# Criando Endereço da Pessoa
+def criar_endereco(pessoa: Pessoa) -> Endereco:
+    """Função que busca as informações do cep via API e cria endereço.
+    
+    Argumentos:
+        pessoa (Pessoa): Objeto Pessoa que vai fornecer o cep
+
+    Retorna:
+        Endereco: Instância da classe Endereco
+    """
+    cep = pessoa.ler_cep()
+
+    # Buscar os dados do CEP
+    dados_cep = cep_service.buscar_cep(cep)
+
+    # Retornar instancia de endereço
+    return Endereco(dados_cep)
+
+
+
+
+# Validando celular da Pessoa
+def formatar_celular(pessoa: Pessoa) -> None:
+    """Ajeita o número do celular na formação dos requisitos.
+    'DD 9XXXXXXXX'
+    
+    Argumentos:
+        pessoa (Pessoa): Objeto Pessoa que sofrerá a formatação do celular
+    
+    """
+    cel = pessoa.celular
+
+    cel_so_numeros = ''.join(filter(lambda x: x.isdigit(), cel))
+
+    # Verificando
+    if not cel_so_numeros:
+        pessoa.observacoes.append('Celular com campo vazio.')
+        # raise ValueError('Celular com campo vazio.')
+
+    elif 8 > len(cel_so_numeros) > 0 or len(cel_so_numeros) > 11:
+        pessoa.observacoes.append('Celular inválido.')
+        # raise ValueError('Celular inválido.')
+    
+    elif len(cel_so_numeros) > 8 and cel_so_numeros[-9] != '9':
+        pessoa.observacoes.append('Celular Inválido.')
+        # raise ValueError('Celular inválido.')
+    
+    
+    if len(cel_so_numeros) == 8:
+        cel = f'{pessoa.endereco.ddd} 9{cel_so_numeros}'
+    elif len(cel_so_numeros) == 9:
+        cel = f'{pessoa.endereco.ddd} {cel_so_numeros}'
+    elif len(cel_so_numeros) == 10:
+        cel = f'{cel_so_numeros[:2]} 9{cel_so_numeros[2:]}'
+    elif len(cel_so_numeros) == 11:
+        cel = f'{cel_so_numeros[:2]} {cel_so_numeros[2:]}'
+
+    # Atribuir o celular de volta
+    pessoa.celular = cel
+
+        
+
     
 
+       
 
 
 
 
+
+
+
+
+
+
+# Testes
 
 # Ler o arquivo CSV e colocar dados numa lista de dicionarios
 lista_clientes = ler_csv(Path(__file__).resolve().parent.parent.parent\
                         /"data"/"lista_clientes.csv")
-
 
 # Criando instancia de Pessoa com a primeira posição da lista do arquivo
 pessoa1 = Pessoa(lista_clientes[0])
@@ -51,24 +150,17 @@ print('Nome completo:', pessoa1.nome_completo)
 print('Primeiro nome:', pessoa1.primeiro_nome)
 print('Segundo nome:', pessoa1.segundo_nome)
 
-# Criando Endereço da Pessoa
-def criar_endereco(cep: str) -> Endereco:
-    """Função que busca as informações do cep via API e cria endereço.
-    
-    Args:
-        cep (str): Código de Endereçamento Postal
-
-    Returns:
-        Endereco: Instância da classe Endereco
-    """
-    # Buscar os dados do CEP
-    dados_cep = cep_service.buscar_cep(cep)
-
-    # Retornar instancia de endereço
-    return Endereco(dados_cep)
-
-end = criar_endereco(pessoa1.ler_cep())
+end = criar_endereco(pessoa1)
 print(end.__dict__)
 print()
-pessoa1.atribuir_endereco(end)
+pessoa1.endereco = end
+# pessoa1.atribuir_endereco(end)
 print(pessoa1.endereco.bairro)
+print()
+print(pessoa1.celular)
+formatar_celular(pessoa1)
+print(pessoa1.celular)
+print()
+print(pessoa1.observacoes)
+print()
+print(pessoa1.__dict__)
