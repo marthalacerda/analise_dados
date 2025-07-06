@@ -151,8 +151,7 @@ def formatar_celular(pessoa: Pessoa) -> str:
     elif len(cel_so_numeros) > 8 and cel_so_numeros[-9] != '9':
         # pessoa.observacoes.append('Celular Inválido.')
         raise ValueError('Celular inválido.')
-    
-    
+        
     if len(cel_so_numeros) == 8:
         cel = f'{pessoa.endereco.ddd} 9{cel_so_numeros}'
     elif len(cel_so_numeros) == 9:
@@ -184,15 +183,15 @@ def buscar_genero(pessoa: Pessoa, opcao: str) -> str:
     # Chamar a função da API escolhida pelo usuário
     match opcao:
         case '1':
-            genero = gender_service.buscar_genero_generize(nome)
+            genero = gender_service.buscar_genderize(nome)
 
         case '2':
-            ...
+            genero = gender_service.buscar_genderapi(nome)
 
         case '3':
-            ...
-        case _:
-            return genero
+            genero = gender_service.buscar_genderapicom(nome)
+
+    return genero
     
 
        
@@ -240,5 +239,5 @@ print()
 print(pessoa1.cpf)
 print()
 
-validar_cpf(pessoa1)
+#validar_cpf(pessoa1)
 print(pessoa1.observacoes)

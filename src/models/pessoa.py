@@ -48,7 +48,7 @@ class Pessoa:
         # self.estado - atribuído em função
         self.celular = pessoa_data.get('Celular')
         self.cpf = pessoa_data.get('CPF')
-    
+        self.genero = ''
         
 
 
@@ -176,6 +176,19 @@ class Pessoa:
     def add_observacao(self, obs: str) -> None:
         """Adiciona uma observação à lista de observações da Pessoa"""
         self.observacoes.append(obs)
+
+    # Genero
+
+    @property
+    def genero(self) -> str:
+        """Retorna o genero"""
+        return self.__genero
+    
+    @genero.setter
+    def genero(self, genero: str) -> None:
+        """Atribui genero a Pessoa"""
+        self.__genero = genero
+
 
 
 if __name__ == '__main__':
