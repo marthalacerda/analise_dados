@@ -47,15 +47,15 @@ class Pessoa:
         # self.cidade - atribuido em função
         # self.estado - atribuído em função
         self.celular = pessoa_data.get('Celular')
+        self.cpf = pessoa_data.get('CPF')
     
         
 
 
-        # self.cpf
 
         # Dados acessados via API
         # self.genero
-        # self.cpf
+        
 
 
           
@@ -153,13 +153,23 @@ class Pessoa:
         """Retorna o celular"""
         return self.__celular
     
-    @ celular.setter
+    @celular.setter
     def celular(self, cel: str) -> None:
         """Atribui celular a Pessoa."""
         
         self.__celular = cel
       
-       
+    # CPF
+
+    @property
+    def cpf(self) -> str:
+        """Retorna o cpf"""
+        return self.__cpf
+    
+    @cpf.setter
+    def cpf(self, cpf: str) -> None:
+        cpf_so_numeros = ''.join(list(filter(lambda x: x.isdigit(), cpf)))
+        self.__cpf = cpf_so_numeros
 
 
 

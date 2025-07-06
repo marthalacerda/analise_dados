@@ -10,6 +10,7 @@ Lista de métodos:
 
 import sys
 import os
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from pathlib import Path
@@ -17,6 +18,7 @@ from src.repo.csv_repo import ler_csv
 from src.models.pessoa import Pessoa
 from src.models.endereco import Endereco
 from src.services import cep_service
+from src.models.cpf import CPF
 
 # depois mudar - tirar os src. e apagar as 3 primeiras linhas lá de cima
 
@@ -42,7 +44,7 @@ def construir_pessoa(dados_pessoa: dict) -> Pessoa:
         Pessoa: Instância de Pessoa
     """
     
-    # Criar Pessoa com dados incompletos
+    # Criar Pessoa com atributos semi preenchidos
     pessoa = Pessoa(dados_pessoa)           # aqui tratou e atribuiu os nomes
 
     # Criar Endereco atraves do CEP da pessoa e atribuir a ela
@@ -53,9 +55,17 @@ def construir_pessoa(dados_pessoa: dict) -> Pessoa:
 
     # Ler o telefone e verificar se é válido ou se precisa de ajuste
     try:
-        formatar_celular(pessoa)
+        pessoa.endereco = formatar_celular(pessoa)      # aqui ajustou o celular
     except ValueError as e:
         pessoa.observacoes.append(e)
+
+    # Chamar init de CPF para validar o cpf de Pessoa
+    try:
+        CPF(pessoa.cpf)                         # aqui a instancia de CPF verificou o cpf
+    except ValueError as e:
+        pessoa.observacoes.append(e)
+
+
 
 
     # Atribuir as informações de endereço em Pessoa
@@ -89,12 +99,15 @@ def criar_endereco(pessoa: Pessoa) -> Endereco:
 
 
 # Validando celular da Pessoa
-def formatar_celular(pessoa: Pessoa) -> None:
+def formatar_celular(pessoa: Pessoa) -> str:
     """Ajeita o número do celular na formação dos requisitos.
     'DD 9XXXXXXXX'
     
     Argumentos:
         pessoa (Pessoa): Objeto Pessoa que sofrerá a formatação do celular
+    
+    Retorna:
+        str: Celular formatado
     """
     cel = pessoa.celular
 
@@ -123,8 +136,7 @@ def formatar_celular(pessoa: Pessoa) -> None:
     elif len(cel_so_numeros) == 11:
         cel = f'{cel_so_numeros[:2]} {cel_so_numeros[2:]}'
 
-    # Atribuir o celular de volta
-    pessoa.celular = cel
+    return cel
 
         
 
@@ -170,3 +182,7 @@ print()
 print(pessoa1.observacoes)
 print()
 print(pessoa1.__dict__)
+print()
+
+print(pessoa1.cpf)
+print()
