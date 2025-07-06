@@ -42,6 +42,7 @@ class Endereco:
         self.estado = dados.get('uf', '')
         self.ddd = dados.get('ddd', '')
         self.regiao = dados.get('regiao', '')
+        
 
     # Encapsulando
     @property

@@ -42,4 +42,4 @@ def buscar_cep(cep: str) -> dict[str, str]:
 # Testando
 
 if __name__ == '__main__':
-    print(buscar_cep('51170145'))
+    print(buscar_cep('12345678'))

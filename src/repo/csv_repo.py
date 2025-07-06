@@ -1,6 +1,5 @@
 """Leitura do arquivo csv com os dados"""
 
-
 import csv
 from pathlib import Path
 

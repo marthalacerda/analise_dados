@@ -23,9 +23,15 @@ from src.models.cpf import CPF
 # depois mudar - tirar os src. e apagar as 3 primeiras linhas lá de cima
 
 class PessoaController:
-    """Classe com métodos para a montagem de objeto Pessoa"""
-    def __init__(self, opcao_genero):
+    """Classe com métodos para a montagem de objeto Pessoa
+    Faz o controle do fluxo de criação, chamando todos os métodos
+    para obter as informações necessárias para completar o objeto Pessoa.
+    
+    Parâmetros:
+        opcao_genero (str): Escolha do usuário para a API que vai inferir o gênero de Pessa."""
 
+    def __init__(self, opcao_genero):
+        """Inicia o Controller"""
         ...
 
 
@@ -59,29 +65,21 @@ def construir_pessoa(dados_pessoa: dict, opcao_genero) -> Pessoa:
     try:
         pessoa.celular = formatar_celular(pessoa)      # aqui ajustou o celular
     except ValueError as e:
-        pessoa.add_observacao(e)
+        pessoa.add_observacao(str(e))
 
     # Chamar init de CPF para validar o cpf de Pessoa
     try:
         CPF(pessoa.cpf)                         # aqui a instancia de CPF verificou o cpf
     except ValueError as e:
-        pessoa.add_observacao(e)
+        pessoa.add_observacao(str(e))
 
     # Acessar API de genero
     try:
-        pessoa.genero = buscar_genero(pessoa, opcao_genero)
+        pessoa.genero = buscar_genero(pessoa, opcao_genero)     # aqui acessou api de genero e atribuiu
     except ConnectionError as e:
         print(e)
 
-
-
-    # Atribuir as informações de endereço em Pessoa
-    # pessoa.atribuir_endereco(endereco)          # aqui criou o atributo endereco em Pessoa
-    # pessoa.bairro = endereco.bairro
-    # pessoa.cidade = endereco.cidade
-    # pessoa.estado = endereco.estado
-    # pessoa.endereco = endereco
-
+    return pessoa
 
 
 # Criando CEP e validando
@@ -96,8 +94,6 @@ def validar_cpf(pessoa: Pessoa) -> None:
     """
     cpf = pessoa.cpf
     CPF(cpf)
-
-
 
 
 # Criando Endereço da Pessoa
@@ -123,7 +119,6 @@ def criar_endereco(pessoa: Pessoa) -> Endereco:
     return Endereco(dados_cep)
 
 
-
 # Validando celular da Pessoa
 def formatar_celular(pessoa: Pessoa) -> str:
     """Ajeita o número do celular na formação dos requisitos.
@@ -135,31 +130,31 @@ def formatar_celular(pessoa: Pessoa) -> str:
     Retorna:
         str: Celular formatado
     """
-    cel = pessoa.celular
-
-    cel_so_numeros = ''.join(filter(lambda x: x.isdigit(), cel))
+    # cel = pessoa.celular
+    # Filtrar o celular para ficar com somente números
+    cel = ''.join(filter(lambda x: x.isdigit(), pessoa.celular))
 
     # Verificando
-    if not cel_so_numeros:
+    if not cel:
         # pessoa.observacoes.append('Celular com campo vazio.')
         raise ValueError('Celular com campo vazio.')
 
-    elif 8 > len(cel_so_numeros) > 0 or len(cel_so_numeros) > 11:
+    elif 8 > len(cel) > 0 or len(cel) > 11:
         # pessoa.observacoes.append('Celular inválido.')
         raise ValueError('Celular inválido.')
     
-    elif len(cel_so_numeros) > 8 and cel_so_numeros[-9] != '9':
+    elif len(cel) > 8 and cel[-9] != '9':
         # pessoa.observacoes.append('Celular Inválido.')
         raise ValueError('Celular inválido.')
         
-    if len(cel_so_numeros) == 8:
-        cel = f'{pessoa.endereco.ddd} 9{cel_so_numeros}'
-    elif len(cel_so_numeros) == 9:
-        cel = f'{pessoa.endereco.ddd} {cel_so_numeros}'
-    elif len(cel_so_numeros) == 10:
-        cel = f'{cel_so_numeros[:2]} 9{cel_so_numeros[2:]}'
-    elif len(cel_so_numeros) == 11:
-        cel = f'{cel_so_numeros[:2]} {cel_so_numeros[2:]}'
+    if len(cel) == 8:
+        cel = f'{pessoa.endereco.ddd} 9{cel}'
+    elif len(cel) == 9:
+        cel = f'{pessoa.endereco.ddd} {cel}'
+    elif len(cel) == 10:
+        cel = f'{cel[:2]} 9{cel[2:]}'
+    elif len(cel) == 11:
+        cel = f'{cel[:2]} {cel[2:]}'
 
     return cel
 
@@ -212,32 +207,44 @@ lista_clientes = ler_csv(Path(__file__).resolve().parent.parent.parent\
                         /"data"/"lista_clientes.csv")
 
 # Criando instancia de Pessoa com a primeira posição da lista do arquivo
-pessoa1 = Pessoa(lista_clientes[0])
+# pessoa1 = Pessoa(lista_clientes[0])
 
-# testando retornos de funções ... em andamento
-print('----------Testes-----------')
-print('Nome completo:', pessoa1.nome_completo)
-print('Primeiro nome:', pessoa1.primeiro_nome)
-print('Segundo nome:', pessoa1.segundo_nome)
+print(lista_clientes[0])
+print()
+pessoa2 = construir_pessoa(lista_clientes[0], '')
 
-end = criar_endereco(pessoa1)
-print(end.__dict__)
-print()
-pessoa1.endereco = end
-# pessoa1.atribuir_endereco(end)
-print(pessoa1.endereco.bairro)
-print()
-print(pessoa1.celular)
-formatar_celular(pessoa1)
-print(pessoa1.celular)
-print()
-print(pessoa1.observacoes)
-print()
-print(pessoa1.__dict__)
-print()
+print(pessoa2.observacoes)
+print(pessoa2.endereco.__dict__)
 
-print(pessoa1.cpf)
-print()
 
-#validar_cpf(pessoa1)
-print(pessoa1.observacoes)
+
+
+
+# # testando retornos de funções ... em andamento
+# print('----------Testes-----------')
+# print('Nome completo:', pessoa1.nome_completo)
+# print('Primeiro nome:', pessoa1.primeiro_nome)
+# print('Segundo nome:', pessoa1.segundo_nome)
+
+# end = criar_endereco(pessoa1)
+# print(end.__dict__)
+# print()
+# pessoa1.endereco = end
+# # pessoa1.atribuir_endereco(end)
+# print(pessoa1.endereco.bairro)
+# print()
+# print(pessoa1.celular)
+# formatar_celular(pessoa1)
+# print(pessoa1.celular)
+# print()
+# print(pessoa1.observacoes)
+# print()
+# print(pessoa1.__dict__)
+# print()
+
+# print(pessoa1.cpf)
+# print()
+
+# #validar_cpf(pessoa1)
+# print(pessoa1.observacoes)
+

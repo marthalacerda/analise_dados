@@ -4,6 +4,11 @@ Nese módulo estão implementadas funções de cada requisição
 """
 
 import requests
+from dotenv import load_dotenv
+import os
+
+# Carregando as variáveis de ambiente de .env
+load_dotenv()
 
 # API Genderize.io
 def buscar_genderize(nome: str) -> str:
@@ -47,7 +52,8 @@ def buscar_genderapi(nome: str) -> str:
     Retorna:
         str: Genero provável do nome (male/female)
     """
-    key = '686a20f6e57908da4dbe6f58'
+    # Buscando a chave em .env
+    key = os.getenv('API_KEY_IO')
 
     # Definindo a url da requisição get à API GenerAPI.io
     url = f'https://api.genderapi.io/api/?name={nome}&key={key}'
@@ -77,7 +83,8 @@ def buscar_genderapicom(nome: str) -> str:
     Retorna:
         str: Genero provável do nome (male/female)
     """
-    key = '6b59b10fd62848298f243c274e2522a3e42ccab9c856b58ef21af6e2353a0a6a'
+    # Buscando a chave em .env
+    key = os.getenv('API_KEY_COM')
 
     # Definindo a url da requisição get à API GenerAPI.io
     url = f'https://gender-api.com/get?name={nome}&key={key}'
@@ -98,4 +105,4 @@ def buscar_genderapicom(nome: str) -> str:
 # Testando
 
 if __name__ == '__main__':
-    print(buscar_genderize('Martha'))
+    print(buscar_genderize('Luciano'))
