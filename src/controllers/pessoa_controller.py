@@ -22,10 +22,11 @@ from src.services import cep_service
 
 class PessoaController:
     """Classe com métodos para a montagem de objeto Pessoa"""
-    ...
+    
 
 
 
+#-------------------------------------------------------
 
 
 
@@ -35,6 +36,7 @@ def construir_pessoa(dados_pessoa: dict) -> Pessoa:
     """Função para construir uma instância de Pessoa.
     
     Argumentos:
+        dados_pessoa: Dicionário com as informações do cliente no banco de dados
     
     Retorna:
         Pessoa: Instância de Pessoa
@@ -44,11 +46,16 @@ def construir_pessoa(dados_pessoa: dict) -> Pessoa:
     pessoa = Pessoa(dados_pessoa)           # aqui tratou e atribuiu os nomes
 
     # Criar Endereco atraves do CEP da pessoa e atribuir a ela
-    pessoa.endereco = criar_endereco(pessoa.ler_cep())     # aqui criou endereço
+    try:
+        pessoa.endereco = criar_endereco(pessoa)     # aqui criou endereço
+    except (ValueError, ConnectionError) as e:
+        print(e)
 
     # Ler o telefone e verificar se é válido ou se precisa de ajuste
-
-
+    try:
+        formatar_celular(pessoa)
+    except ValueError as e:
+        pessoa.observacoes.append(e)
 
 
     # Atribuir as informações de endereço em Pessoa
@@ -88,7 +95,6 @@ def formatar_celular(pessoa: Pessoa) -> None:
     
     Argumentos:
         pessoa (Pessoa): Objeto Pessoa que sofrerá a formatação do celular
-    
     """
     cel = pessoa.celular
 
