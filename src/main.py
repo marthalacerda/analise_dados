@@ -52,7 +52,7 @@ def main():
         # Adicionando na lista de saida
         lista_saida.append(controller.to_dict(cliente))
     
-    # print(lista_saida)
+    print(lista_saida)
     
     # Analisando os dados de saida
 

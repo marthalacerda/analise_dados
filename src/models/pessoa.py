@@ -30,7 +30,9 @@ class Pessoa:
         # Dados brutos
         self.dados = pessoa_data
 
-        self.__atribuir_nomes()
+        self.nome_completo = ''
+        self.primeiro_nome = ''
+        self.segundo_nome = ''
         self.genero = ''
         self.email = pessoa_data.get('Email')
         self.celular = pessoa_data.get('Celular')
@@ -43,6 +45,7 @@ class Pessoa:
                                   'regiao': ''})
         self.observacoes = []
 
+        self.__atribuir_nomes()
 
     def ler_nome(self) -> list[str]:
         """Extrai o nome completo numa lista de strings
@@ -87,12 +90,18 @@ class Pessoa:
 
         # Nome formatado em lista
         nome = self.ler_nome()
+        
+        if not nome:
+            return
 
         # Nome completo em uma string só
         self.nome_completo = ' '.join(nome)
-
+        
         # Primeiro e segundo nome em string
         self.primeiro_nome = nome[0]
+        
+        if len(nome) < 2:
+            return
         self.segundo_nome = nome[1]
 
 

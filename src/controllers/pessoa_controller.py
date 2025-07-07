@@ -127,7 +127,7 @@ class PessoaController:
 
         # Verificando campo vazio e celular inválido
         if not cel:
-            raise ValueError('Celular inexistente.')
+            raise ValueError('Celular ausente.')
 
         if 8 > len(cel) > 0 or len(cel) > 11:
             raise ValueError('Celular inválido.')
