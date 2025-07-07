@@ -11,11 +11,12 @@ Fluxo:
 """
 
 from pathlib import Path
+import pandas as pd
+from src.services.conexao_service import tem_conexao
 from src.repo import csv_repo
 from src.repo import json_repo
 from src.controllers.pessoa_controller import PessoaController
 import src.reports.relatorio_service as relatorio
-import pandas as pd
 
 
 # Definindo o caminho do arquivo de entrada
@@ -26,12 +27,21 @@ CAMINHO_CSV = Path('data/lista_clientes.csv')
 def main():
     """Executa o programa"""
 
+    # Testando conexão com a internet
+    if not tem_conexao():
+        print()
+        print('=' * 60)
+        print('Sem conexão com a internet'.center(60))
+        print('=' * 60)
+        return
+
     exibir_cabecalho()
     opcao = escolher_api_genero()
 
     if opcao == '0':
+        print()
         print('=' * 60)
-        print('Fim'.center(60))
+        print('Programa encerrado'.center(60))
         print('=' * 60)
         return
 
@@ -40,7 +50,6 @@ def main():
     # Listas de entrada e saidaa
     lista_clientes = csv_repo.ler_csv(CAMINHO_CSV)
     lista_saida = []
-
 
     # Criar controlador
     controller = PessoaController(opcao)
@@ -55,7 +64,6 @@ def main():
 
     # Analisando e imprimindo os dados de saída
     data_frame = pd.DataFrame(lista_saida)
-
     print('=' * 60)
     print('Relatório de Saída'.center(60))
     print('=' * 60)
@@ -67,13 +75,11 @@ def main():
     print('-' * 60)
     relatorio.interesses_report(data_frame)
     print('-' * 60)
-    relatorio.interesses_gen_report(data_frame)
+    relatorio.top_interesses_gen(data_frame)
     print('-' * 60)
 
     # Gerando arquivo de saída
     json_repo.salvar_json(lista_saida)
-
-
 
 
 def exibir_cabecalho() -> None:
@@ -101,10 +107,6 @@ def escolher_api_genero() -> str:
         if escolha in ('1', '2', '3', '4', '0'):
             return escolha
         print('⚠  Opção inválida. Tente novamente.')
-
-
-
-
 
 
 if __name__ == '__main__':

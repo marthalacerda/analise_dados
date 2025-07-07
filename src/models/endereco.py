@@ -41,56 +41,51 @@ class Endereco:
         self.cidade = dados.get('localidade', '')
         self.estado = dados.get('uf', '')
         self.ddd = dados.get('ddd', '')
-        self.regiao = dados.get('regiao', '')
-        
 
-    # Encapsulando
+    # Bairro
+
     @property
     def bairro(self) -> str:
         """Retorna o bairro"""
         return self.__bairro
-    
+
     @bairro.setter
     def bairro(self, bairro_novo: str) -> None:
         """Atribui bairro"""
         self.__bairro = bairro_novo
-    
+
+    # Cidade
+
     @property
     def cidade(self) -> str:
         """Retorna o cidade"""
         return self.__cidade
-    
+
     @cidade.setter
     def cidade(self, cidade_nova: str) -> None:
         """Atribui cidade"""
         self.__cidade = cidade_nova
 
+    # Estado
+
     @property
     def estado(self) -> str:
         """Retorna o estado"""
         return self.__estado
-    
+
     @estado.setter
     def estado(self, estado_novo: str) -> None:
         """Atribui estado"""
         self.__estado = estado_novo
 
+    # DDD
+
     @property
     def ddd(self) -> str:
         """Retorna o ddd"""
         return self.__ddd
-    
+
     @ddd.setter
     def ddd(self, ddd_novo: str) -> None:
         """Atribui ddd"""
         self.__ddd = ddd_novo
-
-    @property
-    def regiao(self) -> str:
-        """Retorna o regiao"""
-        return self.__regiao
-    
-    @regiao.setter
-    def regiao(self, regiao_nova: str) -> None:
-        """Atribui regiao"""
-        self.__regiao = regiao_nova

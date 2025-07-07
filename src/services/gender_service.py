@@ -3,9 +3,9 @@ Módulo para fazer requisição às APIs generize.io, genderapi.io e gender-api.
 Nese módulo estão implementadas funções de cada requisição
 """
 
+import os
 import requests
 from dotenv import load_dotenv
-import os
 
 # Carregando as variáveis de ambiente de .env
 load_dotenv()
@@ -33,8 +33,8 @@ def buscar_genderize(nome: str) -> str:
     # Verificando o status da requisição
     if resposta.status_code != 200:
         raise ConnectionError('Erro ao conectar com a API Genderize.io.')
-    
-    # Pegar os dados em formato JSON
+
+    # Pegando os dados em formato JSON
     dados_nome = resposta.json()
 
     return dados_nome.get('gender')
@@ -64,7 +64,7 @@ def buscar_genderapi(nome: str) -> str:
     # Verificando o status da requisição
     if resposta.status_code != 200:
         raise ConnectionError('Erro ao conectar com a API GenderAPI.io.')
-    
+
     # Pegar os dados em formato JSON
     dados_nome = resposta.json()
 
@@ -95,7 +95,7 @@ def buscar_genderapicom(nome: str) -> str:
     # Verificando o status da requisição
     if resposta.status_code != 200:
         raise ConnectionError('Erro ao conectar com a API Gender-API.com.')
-    
+
     # Pegar os dados em formato JSON
     dados_nome = resposta.json()
 

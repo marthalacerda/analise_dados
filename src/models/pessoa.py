@@ -84,28 +84,26 @@ class Pessoa:
 
         return nome_formatado
 
-
     def __atribuir_nomes(self) -> None:
         """Atribui o nome completo, primeiro e segundo nome de Pessoa."""
 
         # Nome formatado em lista
         nome = self.ler_nome()
-        
+
         if not nome:
             self.add_observacao('Nome em branco.')
             return
 
         # Nome completo em uma string só
         self.nome_completo = ' '.join(nome)
-        
+
         # Primeiro e segundo nome em string
         self.primeiro_nome = nome[0]
-        
+
         if len(nome) < 2:
             self.add_observacao('Nome incompleto.')
             return
         self.segundo_nome = nome[1]
-
 
     def ler_cep(self) -> str:
         """Lê o CEP de Pessoa e retorna na formatação correta com apenas números.
@@ -120,11 +118,9 @@ class Pessoa:
 
         return cep_formatado
 
-
     def add_observacao(self, obs: str) -> None:
         """Adiciona uma observação à lista de observações da Pessoa"""
         self.observacoes.append(obs)
-
 
     def to_dict(self) -> dict:
         """Monta a estrutura de Pessoa que será salva
@@ -148,7 +144,6 @@ class Pessoa:
         }
 
         return estrutura
-
 
     # Endereço
 
@@ -197,8 +192,3 @@ class Pessoa:
     def genero(self, genero: str) -> None:
         """Atribui genero a Pessoa"""
         self.__genero = genero
-
-
-
-if __name__ == '__main__':
-    ...

@@ -135,7 +135,7 @@ class PessoaController:
 
         if (len(cel) == 9 or len(cel) == 11) and cel[-9] != '9':
             raise ValueError('Celular inválido.')
-        
+
         if not pessoa.endereco.ddd and (8 <= len(cel) < 10):
             raise ValueError('Celular sem DDD.')
 
@@ -196,33 +196,3 @@ class PessoaController:
             dict: Estrutura de Pessoa para salvar em arquivo
         """
         return pessoa.to_dict()
-
-
-
-
-
-
-
-if __name__ == '__main__':
-
-
-    # Ler o arquivo CSV e colocar dados numa lista de dicionarios
-    lista_clientes = ler_csv(Path(__file__).resolve().parent.parent.parent\
-                            /"data"/"lista_clientes.csv")
-
-    # Separando um item qualquer da lista
-    dados = lista_clientes[42]
-
-    # Classe controller
-    control = PessoaController('')
-
-    # construir pessoa
-    pessoa1 = control.construir_pessoa(dados)
-
-    print(pessoa1.__dict__)
-    print()
-    print(pessoa1.to_dict())
-
-
-
-

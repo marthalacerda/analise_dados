@@ -2,8 +2,6 @@
 Implementa a classe Cpf
 Conjunto de métodos para validação e formatação do cpf
 """
-
-
 class CPF:
     """CPF formatado
     
@@ -25,14 +23,13 @@ class CPF:
         # Verificar se tem 11 dígitos
         if len(self.cpf) != 11:
             raise ValueError('CPF inválido.')
-        
+
         # Verificar se todos os digitos são iguais
         if len(set(self.cpf)) == 1:
             raise ValueError('CPF inválido.')
-        
+
         if not self.__validar():
             raise ValueError('CPF inválido.')
-        
 
     def __validar(self) -> bool:
         """Valida os dígitos verificadores do CPF seguindo as regras da Receita Federal
@@ -49,14 +46,12 @@ class CPF:
 
         return self.cpf[-2:] == f'{digito1}{digito2}'
 
-
-
     def __digito_verificador(self, qtd: int) -> int:
         """Define digito verificador
         
         Argumentos:
-            qtd (int): Quantidade de primeiros dígitos que serão multiplicados pela regra da Receita Federal
-        """    
+            qtd (int): Quantidade de digitos que serão multiplicados pela regra da Receita Federal
+        """
         # Usando zip para formar lista de tuplas (digito, numero)
         combo = list(zip(self.cpf[:qtd], range(qtd + 1, 1, -1)))
 
@@ -69,5 +64,3 @@ class CPF:
         digito = resultado if resultado < 10 else 0
 
         return digito
-
-
