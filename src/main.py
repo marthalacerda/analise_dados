@@ -30,15 +30,20 @@ CAMINHO_CSV = Path('data/lista_clientes.csv')
 def main():
     """Executa o programa"""
 
-    # Listas de entrada e saidaa
-    lista_clientes = csv_repo.ler_csv(CAMINHO_CSV)
-    lista_saida = []
-
     exibir_cabecalho()
     opcao = escolher_api_genero()
 
     if opcao == '0':
+        print('=' * 60)
+        print('Fim'.center(60))
+        print('=' * 60)
         return
+
+
+    # Listas de entrada e saidaa
+    lista_clientes = csv_repo.ler_csv(CAMINHO_CSV)
+    lista_saida = []
+
 
     # Criar controlador
     controller = PessoaController(opcao)
@@ -53,8 +58,13 @@ def main():
         # Adicionando na lista de saida
         lista_saida.append(controller.to_dict(cliente))
     
-    print(lista_saida)
+    # print(lista_saida)
     
+    # Analisando os dados de saida
+    
+
+
+
     # Gerando arquivo de saída
     json_repo.salvar_json(lista_saida)
 
@@ -80,10 +90,10 @@ def escolher_api_genero() -> str:
         str: Escolha do usuário
     """
     print('Escolha o serviço para inferir o gênero dos clientes:')
-    print('1 - Genderize.io\n2 - GenderAPI.io\n3 - Gender-API.com\n0 - Sair')
+    print('1 - Genderize.io\n2 - GenderAPI.io\n3 - Gender-API.com\n4 - Nenhum\n0 - Sair')
     while True:
         escolha = input('Digite opção: ')
-        if escolha in ('1', '2', '3', '0'):
+        if escolha in ('1', '2', '3', '4', '0'):
             return escolha
         print('⚠  Opção inválida. Tente novamente.')
 
@@ -95,6 +105,3 @@ def escolher_api_genero() -> str:
 if __name__ == '__main__':
     main()
 
-
-# Criando o conteudo do arquivo - .to_dict() monta a estrutura de Pessoa
-# dados = [pessoa.to_dict() for pessoa in lista_pessoas]

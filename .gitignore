@@ -7,4 +7,6 @@ __pycache__/
 # arquivos auxiliares no desenvolvimento
 todo.txt
 
+# dados de saída
+output/
 
