@@ -1,5 +1,5 @@
 """
-Módulo para fazer requisição à API ViaCep
+Requisição à API ViaCep
 Nese módulo está implementada a função para requisição.
 """
 

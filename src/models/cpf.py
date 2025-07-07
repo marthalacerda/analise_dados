@@ -1,5 +1,5 @@
 """
-Representação da classe Cpf
+Implementa a classe Cpf
 Conjunto de métodos para validação e formatação do cpf
 """
 

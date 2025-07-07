@@ -1,4 +1,4 @@
-"""Módulo que executa o programa
+"""Executa o programa principal
 Fluxo:
 1. Extrair dados do banco de dados para a lista de entrada
 2. Pedir ao usuário a opção de API para inferir gênero
@@ -7,23 +7,17 @@ Fluxo:
     Instanstanciar e tratar Pessoa
     Adicionar na lista de saída
 5. Salvar arquivo json
+6. Analisar os dados
 """
+
 from pathlib import Path
-
-
-# Repositórios
 from src.repo import csv_repo
 from src.repo import json_repo
-
-# Controladores
 from src.controllers.pessoa_controller import PessoaController
-
 
 
 # Definindo o caminho do arquivo de entrada
 CAMINHO_CSV = Path('data/lista_clientes.csv')
-
-
 
 
 # Função de execução principal
@@ -61,7 +55,7 @@ def main():
     # print(lista_saida)
     
     # Analisando os dados de saida
-    
+
 
 
 

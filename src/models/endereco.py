@@ -1,5 +1,5 @@
 """
-Módulo para a classe Endereco.
+Implementa a classe Endereco.
 A estrutura de endereço será incorporado à classe Pessoa.
 Atribui somente os dados requisitados pelo sistema.
 A classe é construída a partir da seguinte estrutura de dados:

@@ -1,5 +1,5 @@
 """
-Módulo da classe PessoaController
+Implementa a classe PessoaController
 Esta classe tem todos os métodos necessários para o fluxo de criação do objeto Pessoa
 
 Fluxo:
@@ -10,12 +10,6 @@ Fluxo:
 5. Inferir o gênero
 6. Retornar Pessoa com dados completos
 """
-
-# import sys
-# import os
-
-# # Apagar depois
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from pathlib import Path
 from src.repo.csv_repo import ler_csv
@@ -112,10 +106,9 @@ class PessoaController:
         """
         cep = pessoa.ler_cep()
 
-        # Buscar os dados do CEP
+        # Buscando os dados do CEP
         dados_cep = cep_service.buscar_cep(cep)
 
-        # Retornar instancia de endereço
         return Endereco(dados_cep)
 
 
@@ -173,7 +166,7 @@ class PessoaController:
         """
         nome = pessoa.primeiro_nome
 
-        # Chamar a função da API escolhida pelo usuário
+        # Chamando a função da API escolhida pelo usuário
         match opcao:
             case '1':
                 return gender_service.buscar_genderize(nome)

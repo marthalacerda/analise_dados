@@ -1,8 +1,6 @@
 """
-Modulo para a classe Pessoa.
-Este módulo define a estrutura de uma Pessoa, com atributos provenientes de
-um arquivo em /data.
-Tem métodos para formatação e validação das informações recebidas.
+Implementa a classe Pessoa.
+Tem métodos para formatação e validação de alguns dados.
 """
 
 from src.models.endereco import Endereco

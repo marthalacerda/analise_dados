@@ -1,4 +1,4 @@
-"""Armazenamento dos arquivos JSON"""
+"""Funções para salvar arquivos JSON"""
 
 import json
 import os
