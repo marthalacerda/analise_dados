@@ -14,6 +14,8 @@ from pathlib import Path
 from src.repo import csv_repo
 from src.repo import json_repo
 from src.controllers.pessoa_controller import PessoaController
+import src.reports.relatorio_service as relatorio
+import pandas as pd
 
 
 # Definindo o caminho do arquivo de entrada
@@ -33,6 +35,7 @@ def main():
         print('=' * 60)
         return
 
+    print('\n- - - Processando - - -')
 
     # Listas de entrada e saidaa
     lista_clientes = csv_repo.ler_csv(CAMINHO_CSV)
@@ -42,8 +45,6 @@ def main():
     # Criar controlador
     controller = PessoaController(opcao)
 
-
-    # Iterando lista de clientes
     for pessoa in lista_clientes:
 
         # Instanciando Pessoa
@@ -51,13 +52,23 @@ def main():
 
         # Adicionando na lista de saida
         lista_saida.append(controller.to_dict(cliente))
-    
-    print(lista_saida)
-    
-    # Analisando os dados de saida
 
+    # Analisando e imprimindo os dados de saída
+    data_frame = pd.DataFrame(lista_saida)
 
-
+    print('=' * 60)
+    print('Relatório de Saída'.center(60))
+    print('=' * 60)
+    relatorio.genero_report(data_frame)
+    print('-' * 60)
+    relatorio.regiao_report(data_frame)
+    print('-' * 60)
+    relatorio.qualidade_report(data_frame)
+    print('-' * 60)
+    relatorio.interesses_report(data_frame)
+    print('-' * 60)
+    relatorio.interesses_gen_report(data_frame)
+    print('-' * 60)
 
     # Gerando arquivo de saída
     json_repo.salvar_json(lista_saida)
@@ -98,4 +109,3 @@ def escolher_api_genero() -> str:
 
 if __name__ == '__main__':
     main()
-

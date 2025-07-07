@@ -23,7 +23,7 @@ class Pessoa:
 
     def __init__(self, pessoa_data: dict[str, str]) -> None:
         """Inicializa a instância de Pessoa.
-        
+
         Args:
             pessoa_data (dict[str, str]): Dicionario com dados do cliente
         """
@@ -92,6 +92,7 @@ class Pessoa:
         nome = self.ler_nome()
         
         if not nome:
+            self.add_observacao('Nome em branco.')
             return
 
         # Nome completo em uma string só
@@ -101,6 +102,7 @@ class Pessoa:
         self.primeiro_nome = nome[0]
         
         if len(nome) < 2:
+            self.add_observacao('Nome incompleto.')
             return
         self.segundo_nome = nome[1]
 
@@ -114,7 +116,7 @@ class Pessoa:
         cep = self.dados.get('CEP')
 
         # Juntando uma lista que filtra caracteres numericos
-        cep_formatado = ''.join(list(filter(lambda x: x.isdigit(), cep)))
+        cep_formatado = ''.join(list(filter(lambda x: x.isnumeric(), cep)))
 
         return cep_formatado
 
@@ -181,7 +183,7 @@ class Pessoa:
 
     @cpf.setter
     def cpf(self, cpf: str) -> None:
-        cpf_so_numeros = ''.join(list(filter(lambda x: x.isdigit(), cpf)))
+        cpf_so_numeros = ''.join(list(filter(lambda x: x.isnumeric(), cpf)))
         self.__cpf = cpf_so_numeros
 
     # Genero

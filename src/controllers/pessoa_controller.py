@@ -47,13 +47,14 @@ class PessoaController:
         """
 
         # Criando Pessoa (nomes formatados)
+        
         pessoa = Pessoa(dados_pessoa)
 
         # Criando e atribuindo Endereco
         try:
             pessoa.endereco = self.__criar_endereco(pessoa)
         except (ValueError, ConnectionError) as e:
-            print(e)
+            pessoa.add_observacao(str(e))
 
         # Verificando e formatando o celular
         try:
@@ -132,8 +133,11 @@ class PessoaController:
         if 8 > len(cel) > 0 or len(cel) > 11:
             raise ValueError('Celular inválido.')
 
-        if len(cel) > 8 and cel[-9] != '9':
+        if (len(cel) == 9 or len(cel) == 11) and cel[-9] != '9':
             raise ValueError('Celular inválido.')
+        
+        if not pessoa.endereco.ddd and (8 <= len(cel) < 10):
+            raise ValueError('Celular sem DDD.')
 
         # Formatando o celular
         if len(cel) == 8:
