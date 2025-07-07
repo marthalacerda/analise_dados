@@ -7,25 +7,26 @@ from pathlib import Path
 def ler_csv(caminho_arquivo: Path) -> list[dict]:
     """Lê um arquivo csv e retorna seus dados sem tratamento
     
-    Args:
+    Argumentos:
         caminho_arquivo: Path - caminho para o arquivo csv em ./data.
     
-    Raises:
+    Levanta:
         FileNotFoundError: Caso o arquivo não seja encontrado.
     
-    Returns:
+    Retorna:
         list[dict] - lista de registros do csv, cada um como um dicionario.
     """
-    
-    # Verificar se o caminho existe
+
+    # Verificando se o caminho existe
     if not caminho_arquivo.exists():
         raise FileNotFoundError('Arquivo não encontrado.')
 
-    # Abrir o arquivo usando Path.open()
+    # Abrindo o arquivo usando Path.open()
     with caminho_arquivo.open(mode='r', encoding='utf-8') as arquivo:
-    
-        # O DictReader considera a 1a linha como cabeçalho, e depois cada linha como um dicionário.
+
+        # Transformando os dados em dicionários
         leitor = csv.DictReader(arquivo)
+
         return list(leitor)
 
 

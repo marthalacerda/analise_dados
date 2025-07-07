@@ -16,4 +16,4 @@ def salvar_json(dados: list[dict], caminho: str = "output/users.json") -> None:
 
     # Escrevendo o arquivo
     with open(caminho, 'w', encoding='utf-8') as f:
-        json.dump({"users": dados}, f, ensure_ascii=False, ident=2)
+        json.dump({"users": dados}, f, ensure_ascii=False, indent=2)

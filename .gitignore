@@ -1,2 +1,10 @@
-todo.txt
+# cache
+__pycache__/
+
+# dados sensíveis
 .env
+
+# arquivos auxiliares no desenvolvimento
+todo.txt
+
+

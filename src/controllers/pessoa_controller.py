@@ -11,11 +11,11 @@ Fluxo:
 6. Retornar Pessoa com dados completos
 """
 
-import sys
-import os
+# import sys
+# import os
 
-# Apagar depois
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+# # Apagar depois
+# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from pathlib import Path
 from src.repo.csv_repo import ler_csv
@@ -23,8 +23,6 @@ from src.models.pessoa import Pessoa
 from src.models.endereco import Endereco
 from src.services import cep_service, gender_service
 from src.models.cpf import CPF
-
-# depois mudar - tirar os src. e apagar as 3 primeiras linhas lá de cima
 
 class PessoaController:
     """Classe com métodos para a montagem de objeto Pessoa
@@ -136,7 +134,7 @@ class PessoaController:
 
         # Verificando campo vazio e celular inválido
         if not cel:
-            raise ValueError('Celular com campo vazio.')
+            raise ValueError('Celular inexistente.')
 
         if 8 > len(cel) > 0 or len(cel) > 11:
             raise ValueError('Celular inválido.')
@@ -226,7 +224,7 @@ if __name__ == '__main__':
 
     print(pessoa1.__dict__)
     print()
-    print(pessoa1.endereco.__dict__)
+    print(pessoa1.to_dict())
 
 
 
