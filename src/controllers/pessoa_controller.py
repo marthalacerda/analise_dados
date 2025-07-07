@@ -190,6 +190,23 @@ class PessoaController:
                 return ''
 
 
+    def to_dict(self, pessoa: Pessoa) -> dict:
+        """Transforma estrutura de Pessoa em dicionario
+        Chama o método to_dict() de Pessoa
+        
+        Argumentos:
+            pessoa (Pessoa): Objeto Pessoa que será estruturada
+        
+        Retorna:
+            dict: Estrutura de Pessoa para salvar em arquivo
+        """
+        return pessoa.to_dict()
+
+
+
+
+
+
 
 if __name__ == '__main__':
 

@@ -117,6 +117,30 @@ class Pessoa:
         self.observacoes.append(obs)
 
 
+    def to_dict(self) -> dict:
+        """Monta a estrutura de Pessoa que será salva
+        
+        Retorna:
+            dict: Dicionário com a estrutura requisitada
+        """
+        estrutura = {
+            "nome_completo": self.nome_completo,
+            "primeiro_nome": self.primeiro_nome,
+            "segundo_nome": self.segundo_nome,
+            "genero": self.genero,
+            "email": self.email,
+            "celular": self.celular,
+            "interesse": self.interesse,
+            "cpf": self.cpf,
+            "bairro": self.endereco.bairro,
+            "cidade": self.endereco.cidade,
+            "estado": self.endereco.estado,
+            "observacoes": ' '.join(self.observacoes)
+        }
+
+        return estrutura
+
+
     # Endereço
 
     @property
