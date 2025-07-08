@@ -1,12 +1,23 @@
-# cache
+# Arquivos de cache do Python
 __pycache__/
+*.py[cod]
+*.pyo
 
-# dados sensíveis
+# Ambientes virtuais
+.venv/
+venv/
+
+# Arquivos de configuração sensíveis
 .env
+.env.*
+
+# Dados de saída e resultados
+output/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
 
 # arquivos auxiliares no desenvolvimento
 todo.txt
-
-# dados de saída
-output/
 

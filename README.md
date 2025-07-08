@@ -63,16 +63,17 @@ analise_dados/
 - Conexão com internet
 - Bibliotecas requests, pandas e python-dotenv
 
-**Instale as dependências do projeto com:**
+
+
+
+## ▶️ Como executar o projeto?
+
+### 1.**Instale as dependências do projeto com:**
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## ▶️ Como executar o projeto?
-
-### 1. **Configure as chaves de APIs**
+### 2. **Configure as chaves de APIs**
 
 O sistema usa 2 APIs externas que necessitam de uma chave de usuário, então elas devem estar configuradas para o programa garantir todas as funcionalidades.
 
@@ -94,7 +95,7 @@ API_KEY_COM = 'SuaChaveAqui'
 > ⚠️ ATENÇÃO:
 > - Se as chaves não forem configuradas, a única API de gênero que funcionará corretamente é a **Genderize.io** (opção 1 do programa)
 
-### 2. **Execute o projeto a partir da raiz:**
+### 3. **Execute o projeto a partir da raiz:**
 
 Como o projeto possui uma estrutura com várias camadas, utiliza muitos imports. A recomendação é chamar a execução principal pelo terminal:
 

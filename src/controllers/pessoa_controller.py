@@ -72,7 +72,8 @@ class PessoaController:
         try:
             pessoa.genero = self.__buscar_genero(pessoa, self.opcao_genero)
         except ConnectionError as e:
-            print(e)
+            # print(e)
+            pass
 
         return pessoa
 
